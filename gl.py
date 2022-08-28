@@ -62,6 +62,8 @@ class Renderer(object):
         self.active_texture = None
         self.active_texture2 = None
 
+        self.background = None
+
         self.dirLight = V3(2,1,1)
 
         self.glViewMatrix()
@@ -129,6 +131,19 @@ class Renderer(object):
 
         self.zbuffer = [[ float('inf') for y in range(self.height)]
                           for x in range(self.width)]
+
+    def glClearBackground(self):
+        if self.background:
+            for x in range(self.vpX, self.vpX + self.vpWidth + 1):
+                for y in range(self.vpY, self.vpY + self.vpHeight + 1):
+
+                    tU = (x - self.vpX) / self.vpWidth
+                    tV = (y - self.vpY) / self.vpHeight
+
+                    texColor = self.background.getColor(tU, tV)
+
+                    if texColor:
+                        self.glPoint(x,y, color(texColor[0], texColor[1], texColor[2]))
 
     def glClearViewport(self, clr = None):
         for x in range(self.vpX, self.vpX + self.vpWidth):

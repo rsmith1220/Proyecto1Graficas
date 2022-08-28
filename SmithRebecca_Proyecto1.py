@@ -9,13 +9,18 @@ import random
 from shaders import flat,unlit, gourad, toon, glow, textureBlend, sabor
 
 
-w=700
-h=700
+w=900
+h=800
 z=-10
 
 rend= Renderer(w,h)
 
 rend.dirLight = V3(1,0,0)
+
+# rend.background = Texture("plate.bmp")
+
+# rend.glClearBackground()
+
 
 # Chocolate chip cookie
 
@@ -26,7 +31,7 @@ rend.active_shader = sabor
 
 rend.glLoadModel("cookie.obj",
                 translate = V3(-2, -1, -10),
-                scale = V3(1,1,1),
+                scale = V3(0.7,0.7,0.7),
                 rotate = V3(0, -65, -90)
                 )
 
@@ -37,7 +42,7 @@ rend.active_shader = sabor
 # Oreo cookie
 rend.glLoadModel("oreo.obj",
                 translate = V3(1, 1, -10),
-                scale = V3(0.03,0.03,0.03),
+                scale = V3(0.02,0.02,0.02),
                 rotate = V3(0, -70, 90)
                 )
 
@@ -50,7 +55,7 @@ rend.active_shader = sabor
 rend.glLoadModel("bread.obj",
                 translate = V3(1, -1.9, -10),
                 scale = V3(0.5,0.5,0.5),
-                rotate = V3(-70, 0, 90)
+                rotate = V3(90, 0, 0)
                 )
 
 
@@ -62,6 +67,16 @@ rend.active_shader = sabor
 rend.glLoadModel("cupa.obj",
                 translate = V3(1.1, 3, -10),
                 scale = V3(0.7,0.7,0.7),
+                rotate = V3(0, -90, -90)
+                )
+# Dona
+rend.active_texture = Texture("pandona.bmp")
+rend.active_texture2 = Texture("donasombra.bmp")
+rend.active_shader = sabor
+
+rend.glLoadModel("dona.obj",
+                translate = V3(1.1, 3, -10),
+                scale = V3(20,20,20),
                 rotate = V3(0, -90, -90)
                 )
 
