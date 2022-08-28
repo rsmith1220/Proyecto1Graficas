@@ -24,7 +24,7 @@ def flat(render, **kwargs):
         r *= texColor[0]
 
     dirLight = render.dirLight
-    intensity = matesRS.dot(triangleNormal, -dirLight)
+    intensity = matesRS.dot(triangleNormal, dirLight)
 
     b *= intensity
     g *= intensity
@@ -230,7 +230,7 @@ def textureBlend(render, **kwargs):
                                nA[2] * u + nB[2] * v + nC[2] * w]
 
     dirLight = render.dirLight
-    intensity = matesRS.dot(triangleNormal, -dirLight)
+    intensity = matesRS.dot(triangleNormal, dirLight)
 
     b *= intensity
     g *= intensity

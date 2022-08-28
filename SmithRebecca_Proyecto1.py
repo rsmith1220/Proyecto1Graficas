@@ -70,15 +70,15 @@ rend.glLoadModel("cupa.obj",
                 rotate = V3(0, -90, -90)
                 )
 # Dona
-# rend.active_texture = Texture("pandona.bmp")
+rend.active_texture = Texture("banana.bmp")
 # rend.active_texture2 = Texture("donasombra.bmp")
-# rend.active_shader = toon
+rend.active_shader = flat
 
-# rend.glLoadModel("dona.obj",
-#                 translate = V3(1.1, 3, -10),
-#                 scale = V3(20,20,20),
-#                 rotate = V3(0, -90, -90)
-#                 )
+rend.glLoadModel("banana.obj",
+                translate = V3(4, 1, -10),
+                scale = V3(20,20,20),
+                rotate = V3(0, -180, -90)
+                )
 
 rend.glFinish("output.bmp")
 
