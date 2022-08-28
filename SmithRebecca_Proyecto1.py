@@ -6,7 +6,7 @@ from textures import Texture
 from obj import Obj
 import random
 
-from shaders import flat,unlit, gourad, toon, glow, textureBlend, sabor
+from shaders import flat,unlit, gourad, toon, glow, textureBlend, sabor, normalMap
 
 
 w=800
@@ -26,7 +26,7 @@ rend.dirLight = V3(0,1,0)
 
 rend.active_texture = Texture("body.bmp")
 rend.active_texture2 = Texture("shades.bmp")
-rend.active_shader = sabor
+rend.active_shader = normalMap
 
 
 rend.glLoadModel("cookie.obj",

@@ -340,9 +340,9 @@ def normalMap(render, **kwargs):
         texNormal = texNormal.tolist()[0]
         texNormal = matesRS.normal(texNormal)
 
-        intensity = matesRS.dot(texNormal, -dirLight)
+        intensity = matesRS.dot(texNormal, dirLight)
     else:
-        intensity = matesRS.dot(triangleNormal, -dirLight)
+        intensity = matesRS.dot(triangleNormal, dirLight)
 
     b *= intensity
     g *= intensity
