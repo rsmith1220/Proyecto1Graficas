@@ -1,6 +1,5 @@
 import struct
 from collections import namedtuple
-import numpy as np
 
 from matesRS import matriz, cruz, inversa, matrizporvector, subtract, normal
 
@@ -61,6 +60,8 @@ class Renderer(object):
         self.active_shader = None
         self.active_texture = None
         self.active_texture2 = None
+
+        self.normal_map = None
 
         self.background = None
 
@@ -424,26 +425,28 @@ class Renderer(object):
         maxX = round(max(A.x, B.x, C.x))
         maxY = round(max(A.y, B.y, C.y))
 
-        resta1 = []
-        for i, j in zip(verts[1], verts[0]):
-     
-            resta1.append(i - j)
+        edge1 = subtract(verts[1], verts[0])
+        edge2 = subtract(verts[2], verts[0])
 
-        resta2 = []
-        for i, j in zip(verts[2],verts[0]):
-     
-            resta2.append(i - j)
+        triangleNormal = cruz( edge1, edge2)
+        triangleNormal = normal(triangleNormal)
 
-        triangleNormal = cruz(resta1,resta2)
-        # normalizar
-        triangleNormal =  normal(triangleNormal)
+        deltaUV1 = subtract(texCoords[1], texCoords[0])
+        deltaUV2 = subtract(texCoords[2], texCoords[0])
+        f = 1 / (deltaUV1[0]* deltaUV2[1] - deltaUV2[0] * deltaUV1[1])
 
-        # minX = 0 if (minX < 0) else minX 
-        # minY = 0 if (minY < 0) else minY 
-        # maxX = self.width if (maxX > self.width) else maxX 
-        # maxY = self.height if (maxY > self.height) else maxY 
+        tangent = [f * (deltaUV2[1] * edge1[0] - deltaUV1[1] * edge2[0]),
+                   f * (deltaUV2[1] * edge1[1] - deltaUV1[1] * edge2[1]),
+                   f * (deltaUV2[1] * edge1[2] - deltaUV1[1] * edge2[2])]
+        tangent = normal(tangent)
+
+        bitangent = cruz(triangleNormal, tangent)
+        bitangent = normal(bitangent)
+
         for x in range(minX, maxX + 1):
             for y in range(minY, maxY + 1):
+
+
                 u, v, w = baryCoords(A, B, C, V2(x, y))
 
                 if 0<=u and 0<=v and 0<=w:
@@ -460,13 +463,16 @@ class Renderer(object):
                                                              vColor = clr or self.currColor,
                                                              texCoords = texCoords,
                                                              normals = normals,
-                                                             triangleNormal = triangleNormal)
+                                                             triangleNormal = triangleNormal,
+                                                             tangent = tangent,
+                                                             bitangent = bitangent)
 
 
 
                                 self.glPoint(x, y, color(r,g,b))
                             else:
                                 self.glPoint(x,y, clr)
+
 
 
 
