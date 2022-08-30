@@ -15,7 +15,7 @@ z=-10
 
 rend= Renderer(w,h)
 
-rend.dirLight = V3(0,1,0)
+rend.dirLight = V3(0,0,1)
 
 rend.background = Texture("platito.bmp")
 
